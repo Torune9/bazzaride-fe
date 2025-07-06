@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   modules: ["@pinia/nuxt", "pinia-plugin-persistedstate/nuxt"],
   components: [
     {
-      path: '~/components',
+      path: "~/components",
       pathPrefix: false,
     },
   ],
