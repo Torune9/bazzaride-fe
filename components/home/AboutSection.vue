@@ -3,7 +3,7 @@
         <div class="flex flex-col gap-y-8">
             <div class="flex flex-col gap-y-4 lg:items-center lg:flex-row">
                 <TitleSection class="text-4xl lg:text-5xl">Tentang Kami</TitleSection>
-                <p class="md:text-lg font-semibold w-full flex justify-end">
+                <p class="w-full font-medium md:text-lg lg:font-semibold lg:flex lg:justify-end">
                     Berbasis di kota Bandung, Indonesia,<br>
                     Bazzaride platform digital UMKM.
                 </p>
