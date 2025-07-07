@@ -7,7 +7,12 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  modules: ["@pinia/nuxt", "pinia-plugin-persistedstate/nuxt","@nuxt/icon"],
+  modules: [
+    "@pinia/nuxt",
+    "pinia-plugin-persistedstate/nuxt",
+    "@nuxt/icon",
+    "@nuxt/image",
+  ],
   components: [
     {
       path: "~/components",
