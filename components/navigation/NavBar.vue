@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row justify-between border p-4 items-center max-lg:relative lg:p-2">
+    <div class="flex flex-row justify-between border p-4 items-center max-lg:relative  md:px-16">
         <h1 class="text-2xl">
             Bazzaride
         </h1>
