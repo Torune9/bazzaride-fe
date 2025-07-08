@@ -1,13 +1,14 @@
 <template>
-  <div class="w-full">
-    <label :for="id" class="text-sm font-light block mb-1">
+  <div class="w-full flex flex-col gap-y-2">
+    <label :for="id" class="font-medium block mb-1">
       {{ label }}
     </label>
     <input
       :id="id"
       :type="type"
       :placeholder="placeholder"
-      class="w-full h-10 border rounded-md p-2"
+      class="w-full border focus:outline-none hover:border hover:border-torqouise-retro focus:border-yellow-retro transition-colors duration-300" 
+      :class="sizeClass ? sizeClass : 'p-2 rounded-md'"
       v-model="inputValue"
     />
   </div>
@@ -21,6 +22,7 @@ const props = defineProps<{
   type?: string;
   name?: string;
   placeholder?: string;
+  sizeClass? : string
 }>();
 
 const emit = defineEmits(["update:modelValue"]);
