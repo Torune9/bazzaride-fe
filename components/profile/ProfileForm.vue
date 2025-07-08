@@ -5,7 +5,7 @@
 
       <ButtonAction
         form="profile-form"
-        :mode="formMode"
+        :mode="mode"
         title="Profile"
         :loading="isLoading"
       />
