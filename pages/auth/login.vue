@@ -1,15 +1,17 @@
 <template>
-    <div class="h-screen border-red-800 px-4 flex items-center justify-center font-inter lg:px-0 gap-x-10">
+    <Container class="px-4 flex items-center justify-center lg:px-0 gap-x-10">
         <div class="w-full h-screen bg-torqouise-retro max-lg:hidden">
         </div>
         <!-- Wrapper -->
-        <div class="space-y-6 w-full sm:w-3/4 lg:w-1/2 shrink-0 lg:px-16">
+        <Wrapper class="space-y-6 w-full sm:w-3/4 lg:w-1/2 shrink-0 lg:px-16">
             <!-- Info Login -->
             <div class="space-y-1">
                 <TitleSection class="text-4xl lg:text-6xl">
                     Selamat Datang
                 </TitleSection>
-                <small>Masukan informasi untuk dapat mengakses aplikasi</small>
+                <small>
+                    Masukan informasi untuk dapat mengakses aplikasi
+                </small>
             </div>
             <!-- End Info -->
             <!-- Form -->
@@ -46,9 +48,9 @@
             </div>
             <!-- End Form -->
             <Back />
-        </div>
+        </Wrapper>
         <!-- End Wrapper -->
-    </div>
+    </Container>
 </template>
 <script setup lang="ts">
 const payload = reactive({
