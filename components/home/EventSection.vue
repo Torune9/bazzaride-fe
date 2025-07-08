@@ -6,7 +6,7 @@
         dan 300+ penyelenggara event yang aktif
       </TitleSection>
       <div class="space-y-4">
-        <h1 class="text-lg">Event Terbaru</h1>
+        <h1 class="text-lg border-purple-retro border-l-4 pl-1">Event Terbaru</h1>
         <div class="w-full flex gap-x-2 overflow-x-auto hide-scroll">
           <div
             v-for="n in 6"
