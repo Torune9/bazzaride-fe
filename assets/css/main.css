@@ -4,6 +4,11 @@
 
 @theme {
   --font-inter: "Inter", sans-serif;
+
+  --color-red-retro : #FF5A5F;
+  --color-torqouise-retro : #00A669;
+  --color-yellow-retro : #FFB400;
+  --color-purple-retro: #581845;
 }
 
 .list-custom {
