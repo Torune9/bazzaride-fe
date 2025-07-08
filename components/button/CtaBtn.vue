@@ -1,5 +1,5 @@
 <template>
-    <button class="p-3 border max-w-56 cursor-pointer bg-yellow-retro" :class="roundedBtnOpt">
+    <button class="p-3 border cursor-pointer bg-yellow-retro hover:bg-yellow-300 transition-colors duration-300" :class="roundedBtnOpt">
         <slot/>
     </button>
 </template>

@@ -11,7 +11,7 @@
                     produk-produk
                     unik, kuliner khas, dan peluang kolaborasi – semuanya dalam satu platform!
                 </p>
-                <CtaBtn rounded="full">
+                <CtaBtn rounded="full" class="w-56">
                     Gabung Sekarang
                 </CtaBtn>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10">

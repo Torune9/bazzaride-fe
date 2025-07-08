@@ -13,7 +13,7 @@
                     <li class="">Participant</li>
                 </ul>
                 <NuxtLink
-                    class="max-lg:w-full rounded-full text-sm cursor-pointer p-2 px-4 bg-torqouise-retro text-white text-center"
+                    class="max-lg:w-full rounded-full text-sm cursor-pointer p-2 px-4 bg-torqouise-retro text-white text-center hover:bg-emerald-300 transition-colors duration-300"
                     to="/auth/login">
                     Masuk
                 </NuxtLink>

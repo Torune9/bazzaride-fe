@@ -22,10 +22,10 @@
                     <InputCustom label="Password" id="password" type="password" v-model="payload.password"
                         size-class="p-4 rounded-full" />
                     <div class="space-y-2">
-                        <button
-                            class="w-full bg-red-retro border border-black rounded-full p-4 cursor-pointer text-white">
+                        <BaseBtn
+                            class=" bg-red-retro border border-black text-white hover:bg-red-500 transition-colors duration-300">
                             Masuk
-                        </button>
+                        </BaseBtn>
                         <div class="flex flex-row text-sm justify-between">
                             <p>
                                 Sudah punya akun ?
@@ -41,9 +41,7 @@
                 </form>
             </div>
             <!-- End Form -->
-            <NuxtLink class="flex items-center" to="/">
-                <Icon name="uil:arrow-circle-left" style="font-size: 20px;" />Back
-            </NuxtLink>
+            <Back/>
         </div>
         <!-- End Wrapper -->
     </div>

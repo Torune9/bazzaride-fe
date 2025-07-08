@@ -1,7 +1,7 @@
 <template>
     <div class="h-screen border-red-800 px-4 flex items-center justify-center font-inter lg:px-0 gap-x-10">
-         <div class="w-full h-screen bg-torqouise-retro max-lg:hidden">
-         </div>
+        <div class="w-full h-screen bg-torqouise-retro max-lg:hidden">
+        </div>
         <!-- Wrapper -->
         <div class="space-y-6 w-full sm:w-3/4 lg:w-1/2 shrink-0 lg:px-16">
             <!-- Info Login -->
@@ -18,12 +18,13 @@
                     <InputCustom label="Email" id="email" type="email" placeholder="Jhondoe@mail.com"
                         v-model="payload.email" size-class="p-4 rounded-full">
                     </InputCustom>
-                    <InputCustom label="Password" id="password" type="password" v-model="payload.password" size-class="p-4 rounded-full">
+                    <InputCustom label="Password" id="password" type="password" v-model="payload.password"
+                        size-class="p-4 rounded-full">
                     </InputCustom>
                     <div class="space-y-2">
-                        <button class="w-full bg-yellow-retro border rounded-full p-4 cursor-pointer">
+                        <BaseBtn class="bg-yellow-retro border hover:bg-yellow-300 transition-colors duration-300">
                             Masuk
-                        </button>
+                        </BaseBtn>
                         <div class="flex flex-row text-sm justify-between">
                             <p>
                                 Belum punya akun ?
@@ -37,14 +38,14 @@
                         </div>
                     </div>
                 </form>
-                <button class="w-full bg-purple-retro text-white rounded-full p-4 flex items-center justify-center gap-x-2 cursor-pointer" type="button">
-                    <Icon name="uil:google" style="color: white; font-size: 25px;"/>Login dengan Google
-                </button>
+                <BaseBtn
+                    class="bg-purple-retro text-white flex items-center justify-center gap-x-2 hover:bg-purple-800 duration-300 transition-colors"
+                    type="button">
+                    <Icon name="uil:google" style="color: white; font-size: 25px;" />Login dengan Google
+                </BaseBtn>
             </div>
             <!-- End Form -->
-            <NuxtLink class="flex items-center" to="/">
-               <Icon name="uil:arrow-circle-left" style="font-size: 20px;"/>Back
-            </NuxtLink>
+            <Back />
         </div>
         <!-- End Wrapper -->
     </div>
