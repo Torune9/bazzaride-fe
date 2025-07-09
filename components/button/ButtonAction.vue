@@ -10,13 +10,7 @@
       class="{{ loading ? 'animate-spin' : '' }}"
     />
     <span class="text-sm">
-      {{
-        loading
-          ? "Loading..."
-          : mode === "edit"
-          ? `Update ${title}`
-          : `Create ${title}`
-      }}
+      {{ loading ? "Loading..." : mode === "edit" ? ` ${title}` : ` ${title}` }}
     </span>
   </button>
 </template>

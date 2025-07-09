@@ -7,8 +7,8 @@
       :id="id"
       :type="type"
       :placeholder="placeholder"
-      class="w-full border focus:outline-none hover:border hover:border-torqouise-retro focus:border-yellow-retro transition-colors duration-300" 
-      :class="sizeClass ? sizeClass : 'p-2 rounded-md'"
+      class="border p-2 rounded-md focus:outline-none hover:border hover:border-torqouise-retro focus:border-yellow-retro transition-colors duration-300"
+      :class="sizeClass ? sizeClass : ' '"
       v-model="inputValue"
     />
   </div>
@@ -22,7 +22,7 @@ const props = defineProps<{
   type?: string;
   name?: string;
   placeholder?: string;
-  sizeClass? : string
+  sizeClass?: string;
 }>();
 
 const emit = defineEmits(["update:modelValue"]);

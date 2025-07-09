@@ -6,7 +6,7 @@
       <ButtonAction
         form="profile-form"
         :mode="mode"
-        title="Profile"
+        title="Create Profile"
         :loading="isLoading"
       />
     </div>
@@ -112,7 +112,7 @@ const payloadProfile = reactive({
   firstName: "",
   lastName: "",
   description: "",
-  image: (null as File) || null,
+  image: null,
 });
 
 const handleUploadFile = (e: Event) => {

@@ -39,7 +39,7 @@
 
       <!-- Event Content  -->
       <div v-else-if="currentTab === 'event'" class="py-2 px-6 shrink-0">
-        <h1>INI EVENT</h1>
+        <EventForm />
       </div>
       <!-- Event Content -->
     </main>

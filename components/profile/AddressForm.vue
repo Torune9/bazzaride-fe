@@ -5,7 +5,7 @@
       <ButtonAction
         form="address-form"
         :mode="formMode"
-        title="Address"
+        title="Create Address"
         :loading="isLoading"
       />
     </div>
