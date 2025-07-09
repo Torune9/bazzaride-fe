@@ -47,6 +47,10 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  layout: "blank",
+});
+
 const formMode = ref<"create" | "edit">("create");
 const menuItems: { key: string; label: string; icon: string }[] = [
   { key: "profile", label: "Profile", icon: "uil:user" },

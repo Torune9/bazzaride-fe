@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen font-inter">
-        <slot/>
-    </div>
+  <div class="min-h-screen font-inter">
+    <slot />
+  </div>
 </template>

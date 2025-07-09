@@ -105,7 +105,7 @@ defineProps<{
   mode: "edit" | "create";
 }>();
 
-const previewImage = ref<string | null>("");
+const { previewImg, uploadFile, resetFile, handleUploadFile } = useUploadFile();
 
 const isLoading = ref<boolean>(false);
 const payloadProfile = reactive({
@@ -115,28 +115,18 @@ const payloadProfile = reactive({
   image: null,
 });
 
-const handleUploadFile = (e: Event) => {
-  const target = e.target as HTMLInputElement;
-  const file = target.files[0];
-
-  if (file) {
-    previewImage.value = URL.createObjectURL(file);
-    payloadProfile.image = file;
-  }
-};
-
 const handleSubmitFormProfile = () => {
   isLoading.value = !isLoading.value;
 };
 
 const handleRemoveImage = () => {
-  previewImage.value = null;
+  resetFile();
   payloadProfile.image = null;
 };
 
-watch(previewImage, (oldVal) => {
-  if (oldVal?.startsWith("blob:")) {
-    URL.revokeObjectURL(oldVal);
-  }
+const previewImage = previewImg;
+
+watch(uploadFile, (file: any) => {
+  payloadProfile.image = file;
 });
 </script>

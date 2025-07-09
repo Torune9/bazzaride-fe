@@ -1,9 +1,12 @@
 <template>
-    <NuxtLayout>
+  <!-- <NuxtLayout>
         <template #content>
             <HeroSection/>
             <AboutSection/>
             <EventSection/>
         </template>
-    </NuxtLayout>
+    </NuxtLayout> -->
+  <HeroSection />
+  <AboutSection />
+  <EventSection />
 </template>

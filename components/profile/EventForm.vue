@@ -96,7 +96,7 @@
 </template>
 
 <script setup lang="ts">
-const previewImg = ref<string | null>("");
+const { previewImg, handleUploadFile, resetFile, uploadFile } = useUploadFile();
 
 const payloadEvent = reactive({
   name: "",
@@ -106,17 +106,12 @@ const payloadEvent = reactive({
   description: "",
 });
 
-const handleUploadFile = (e: Event) => {
-  const file = (e.target as HTMLInputElement).files[0];
-
-  if (file) {
-    previewImg.value = URL.createObjectURL(file);
-    payloadEvent.image = file;
-  }
-};
+watch(uploadFile, (file: any) => {
+  payloadEvent.image = file;
+});
 
 const handleDeleteImage = () => {
+  resetFile();
   payloadEvent.image = null;
-  previewImg.value = null;
 };
 </script>
