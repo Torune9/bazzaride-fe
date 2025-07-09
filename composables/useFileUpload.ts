@@ -1,4 +1,4 @@
-export const useUploadFile = (e: Event) => {
+export const useUploadFile = () => {
   const previewImg = ref<string | null>(null);
   const uploadFile = ref<File | null>(null);
 
