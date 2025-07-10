@@ -62,7 +62,7 @@
 <script setup lang="ts">
 import { NuxtLink } from "#components";
 definePageMeta({
-  layout: "blank",
+  layout: false,
 });
 
 const payload = reactive({
