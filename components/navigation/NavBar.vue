@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row justify-between p-4 items-center max-lg:relative md:px-16">
+    <nav class="flex flex-row justify-between p-4 items-center max-lg:relative md:px-16">
         <h1 class="text-2xl font-semibold">
             Bazzaride
         </h1>
@@ -27,7 +27,7 @@
                 </NuxtLink>
             </div>
         </div>
-    </div>
+    </nav>
 </template>
 
 <script setup lang="ts">
