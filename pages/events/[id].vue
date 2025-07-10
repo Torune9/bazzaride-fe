@@ -18,7 +18,7 @@
       <!--End Breadcrumb -->
 
       <!-- Poster Image -->
-      <article class="w-full h-[800px]">
+      <article class="w-full h-auto md:h-[800px]">
         <NuxtImg
           src="https://placehold.co/800x800"
           class="w-full h-full object-cover rounded-md"
