@@ -9,8 +9,16 @@
                 :class="isOpen ? 'translate-0 opacity-100' : '-translate-y-10 opacity-0'">
                 <ul
                     class="w-full max-lg:my-1 max-lg:space-y-2 lg:w-full lg:inline-flex lg:gap-x-8 lg:items-center lg:pl-64 box-border">
-                    <li class="">Event</li>
-                    <li class="">Participant</li>
+                    <li>
+                        <NuxtLink to="/events">
+                            Event
+                        </NuxtLink>
+                    </li>
+                    <li>
+                         <NuxtLink to="/participants">
+                            Participants
+                        </NuxtLink>
+                    </li>
                 </ul>
                 <NuxtLink
                     class="max-lg:w-full rounded-full text-sm cursor-pointer p-2 px-4 bg-torqouise-retro text-white text-center hover:bg-emerald-300 transition-colors duration-300"
