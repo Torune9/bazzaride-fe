@@ -7,8 +7,8 @@
       :id="id"
       :type="type"
       :placeholder="placeholder"
-      class="border p-2 rounded-md focus:outline-none hover:border hover:border-torqouise-retro focus:border-yellow-retro transition-colors duration-300"
-      :class="sizeClass ? sizeClass : ' '"
+      class="border p-2 focus:outline-none hover:border hover:border-torqouise-retro focus:border-yellow-retro transition-colors duration-300"
+      :class="sizeClass ? sizeClass : 'rounded-md'"
       v-model="inputValue"
     />
   </div>
