@@ -1,5 +1,5 @@
 <template>
-    <div class="grid gap-20 lg:grid-cols-[1fr_400px]">
+    <div class="grid gap-5 lg:gap-20 lg:grid-cols-[1fr_400px]">
         <div class="space-y-2 lg:order-2 flex flex-col justify-center lg:space-y-6">
             <h2 class="font-medium text-3xl sm:text-4xl lg:text-6xl/tight">
                 Event <br class="hidden lg:block"> Terbaru
