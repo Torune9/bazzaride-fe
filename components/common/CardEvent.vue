@@ -2,7 +2,7 @@
     <div class="flex flex-col w-full h-full shrink-0 shadow-lg overflow-hidden rounded-md">
         <EventImage src="https://placehold.co/400x800" />
         <div class="grid grid-cols-[1fr_auto] grid-rows-2 items-center p-4 gap-2">
-            <h1 class="text-lg font-medium">{{ truncate(event.name, 5) }}</h1>
+            <h1 class="text-lg font-medium line-clamp-1">{{ event.name }}</h1>
             <small class="text-end lg:text-sm">{{ event.date }}</small>
             <small class="lg:text-sm">Kuota : {{ event.quota }}</small>
             <NuxtLink :to="`/events/${event.id}`">
