@@ -1,6 +1,6 @@
 <template>
-    <div class="rounded-md bg-slate-100 shadow-md hover:shadow-xl"
-        :class="[role == value ? 'scale-110 shadow-lg ring-2 ring-slate-200' : '']">
+    <div class="rounded-md bg-slate-100 shadow-md hover:shadow-xl sm:w-96"
+        :class="[role == value ? 'scale-105 shadow-lg ring-2 ring-slate-200' : '']">
         <label :for="id" class="cursor-pointer group">
             <slot />
         </label>
@@ -19,7 +19,6 @@ const props = defineProps<{
 const role = defineModel('role')
 
 function handleClick(e: MouseEvent) {
-    // Cek: jika user klik radio yang sedang aktif, kosongkan
     if (role.value === props.value) {
         role.value = 0
     } else {
