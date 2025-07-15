@@ -31,22 +31,26 @@
     <!-- End Sidebar -->
     <main class="flex-1 p-4 overflow-y-auto">
       <!-- Profile Content -->
-      <div v-if="currentTab === 'profile'" class="py-2 px-6 shrink-0">
-        <ProfileForm :mode="formMode" />
-        <AddressForm />
+      <div class="py-2 px-6 shrink-0">
+        <component :is="currentTab"></component>
+        <AddressForm v-if="currentTab == profileComponent"/>
+        <!-- <ProfileForm :mode="formMode" />
+        <AddressForm /> -->
       </div>
       <!-- End Profile Content -->
 
       <!-- Event Content  -->
-      <div v-else-if="currentTab === 'event'" class="py-2 px-6 shrink-0">
+      <!-- <div v-else-if="currentTab === 'event'" class="py-2 px-6 shrink-0">
         <EventForm />
-      </div>
+      </div> -->
       <!-- Event Content -->
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { Component, ConcreteComponent } from 'vue';
+
 definePageMeta({
   layout: false,
 });
@@ -55,30 +59,44 @@ const formMode = ref<"create" | "edit">("create");
 const menuItems: { key: string; label: string; icon: string }[] = [
   { key: "profile", label: "Profile", icon: "uil:user" },
   { key: "event", label: "Event", icon: "uil:calendar" },
+  { key: "store", label: "Store", icon: "uil:shop" },
 ];
 const route = useRoute();
 const router = useRouter();
-const currentTab = ref<string>("profile");
+
+const profileComponent = resolveComponent("ProfileForm") as ConcreteComponent;
+const eventComponent = resolveComponent("EventForm") as ConcreteComponent;
+const storeComponent = resolveComponent("StoreForm") as ConcreteComponent;
+
+const currentTab = shallowRef<Component>(resolveComponent("ProfileForm") as ConcreteComponent)
 const isSidebarOpen = ref<boolean>(false);
 
-const selectedTab = (key: "profile" | "event") => {
-  currentTab.value = key;
-  router.replace({ query: { tab: key } });
+const selectedTab = (key: string) => {
+  switch (key) {
+    case 'profile':
+      return currentTab.value = profileComponent;
+    case 'event':
+      return currentTab.value = eventComponent
+    case 'store':
+      return currentTab.value = storeComponent
+  }
+  // currentTab.value = key;
+  // router.replace({ query: { tab: key } });
 };
 
-onMounted(() => {
-  const tabQuery = route.query.tab;
-  if (tabQuery === "event" || tabQuery === "profile") {
-    currentTab.value = tabQuery;
-  }
-});
+// onMounted(() => {
+//   const tabQuery = route.query.tab;
+//   if (tabQuery === "event" || tabQuery === "profile") {
+//     currentTab.value = tabQuery;
+//   }
+// });
 
-watch(
-  () => route.query.tab,
-  (newVal) => {
-    if (newVal === "event" || newVal === "profile") {
-      currentTab.value = newVal;
-    }
-  }
-);
+// watch(
+//   () => route.query.tab,
+//   (newVal) => {
+//     if (newVal === "event" || newVal === "profile") {
+//       currentTab.value = newVal;
+//     }
+//   }
+// );
 </script>
