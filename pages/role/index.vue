@@ -1,10 +1,10 @@
 <template>
-    <div class="w-screen min-h-screen flex flex-col justify-center font-inter px-10 gap-y-8">
-        <h1 class="text-2xl">
+    <div class="w-screen min-h-screen flex flex-col justify-center font-inter px-10 gap-y-8 lg:px-40">
+        <h1 class="text-2xl w-full">
             Sebelum melanjutkan,<br>silahkan pilih peran anda
         </h1>
-        <Wrapper>
-            <div class="flex flex-col gap-y-6">
+        <Wrapper class="flex flex-col justify-center">
+            <div class="flex flex-col gap-6 sm:flex-row">
                 <Radio id="participant" v-model:role="roleOps" :value="1">
                     <Box class="grid grid-cols-[auto_1fr] grid-rows-2 items-center gap-2">
                         <div class="h-20 w-20 group-hover:scale-125 transition bg-white rounded-full">
