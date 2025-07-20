@@ -1,6 +1,6 @@
 <template>
     <div class="rounded-md bg-slate-100 shadow-md hover:shadow-xl sm:w-96"
-        :class="[role == value ? 'scale-105 shadow-lg ring-2 ring-slate-200' : '']">
+        :class="[role == value ? 'scale-105 shadow-lg ring-2 ring-green-300' : '']">
         <label :for="id" class="cursor-pointer group">
             <slot />
         </label>
