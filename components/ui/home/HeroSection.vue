@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="max-lg:hidden w-full h-full flex justify-end items-center">
-                <div class="w-96 h-96 rounded-full bg-blue-500"></div>
+                <NuxtImg src="/hero.png" class="rounded-full w-4/5"/>
             </div>
         </div>
     </section>
