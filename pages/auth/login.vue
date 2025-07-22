@@ -1,6 +1,9 @@
 <template>
-    <Container class="px-4 flex items-center justify-center lg:px-0 gap-x-10">
-        <div class="w-full h-screen bg-torqouise-retro max-lg:hidden"></div>
+    <Container class="px-4 flex items-center justify-center lg:px-8 gap-x-10">
+        <div class="w-full h-screen max-lg:hidden flex flex-col gap-y-4 justify-center items-center bg-torqouise-retro rounded-tr-full rounded-tl-full">
+            <NuxtImg src="/hero.png" alt="hero-image" class="w-3/4 rounded-full bg-white" />
+            
+        </div>
         <!-- Wrapper -->
         <Wrapper class="space-y-6 w-full sm:w-3/4 lg:w-1/2 shrink-0 lg:px-16">
             <!-- Info Login -->
