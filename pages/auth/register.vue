@@ -31,7 +31,7 @@
                 Sudah punya akun ?
                 <NuxtLink to="/auth/login" class="underline"> Login </NuxtLink>
               </p>
-              <NuxtLink to="/forget-password" class="underline">
+              <NuxtLink to="/auth/forget-password" class="underline">
                 Lupa password
               </NuxtLink>
             </div>

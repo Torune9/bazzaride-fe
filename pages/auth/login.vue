@@ -37,7 +37,7 @@
                                     Register
                                 </NuxtLink>
                             </p>
-                            <NuxtLink to="/forget-password" class="underline">
+                            <NuxtLink to="/auth/forget-password" class="underline">
                                 Lupa password
                             </NuxtLink>
                         </div>
@@ -60,6 +60,10 @@
 <script setup lang="ts">
 import { useZodForm } from '~/composables/useZodForm'
 import { UserLoginSchema } from '~/model/formSchema'
+
+definePageMeta({
+    layout: false
+})
 
 const form = reactive({
   email: '',
