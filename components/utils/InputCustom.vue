@@ -7,8 +7,8 @@
       :id="id"
       :type="type"
       :placeholder="placeholder"
-      class="border p-2 focus:outline-none hover:border hover:border-torqouise-retro focus:border-yellow-retro transition-colors duration-300"
-      :class="sizeClass ? sizeClass : 'rounded-md'"
+      class="border focus:outline-none hover:border hover:border-torqouise-retro focus:border-yellow-retro transition-colors duration-300"
+      :class="[sizeClass ? sizeClass : 'rounded-md',pInput ? pInput : 'p-2']"
       v-model="inputValue"
     />
     <small class="text-red-600 flex items-center" v-if="errorMessage">
@@ -26,7 +26,8 @@ const props = defineProps<{
   name?: string;
   placeholder?: string;
   sizeClass?: string;
-  errorMessage? : string
+  errorMessage? : string,
+  pInput? : String
 }>();
 
 const emit = defineEmits(["update:modelValue"]);
