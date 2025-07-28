@@ -11,6 +11,9 @@
       :class="sizeClass ? sizeClass : 'rounded-md'"
       v-model="inputValue"
     />
+    <small class="text-red-600 flex items-center" v-if="errorMessage">
+      <Icon name="heroicons:information-circle" style="margin-right: 2px; font-size: 1.2rem;"/>{{ errorMessage }}
+    </small>
   </div>
 </template>
 
@@ -23,6 +26,7 @@ const props = defineProps<{
   name?: string;
   placeholder?: string;
   sizeClass?: string;
+  errorMessage? : string
 }>();
 
 const emit = defineEmits(["update:modelValue"]);
