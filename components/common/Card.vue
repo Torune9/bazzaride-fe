@@ -13,7 +13,7 @@
                     quibusdam dignissimos quae vel quisquam vero!
                 </p>
                 <CtaBtn class="w-14 h-14 flex items-center justify-center shrink-0" rounded="full">
-                    <Icon name="uil:arrow-right" style="font-size: 24px;" class="-rotate-45" />
+                    <Icon name="heroicons:arrow-right-16-solid" style="font-size: 24px;" class="-rotate-45" />
                 </CtaBtn>
             </div>
         </div>

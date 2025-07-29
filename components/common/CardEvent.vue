@@ -8,7 +8,7 @@
             <NuxtLink :to="`/events/${event.id}`">
                 <button
                     class="rounded-full p-2 cursor-pointer h-10 w-10 lg:h-12 lg:w-12 flex justify-center items-center justify-self-end bg-torqouise-retro hover:bg-green-600 transition-colors duration-300">
-                    <Icon name="uil:arrow-right" style="font-size: 2em; color: #fff; transform: rotate(-25deg);" />
+                    <Icon name="heroicons:arrow-right-16-solid" style="font-size: 2em; color: #fff; transform: rotate(-25deg);" />
                 </button>
             </NuxtLink>
         </div>
