@@ -81,15 +81,14 @@ const isDisable = ref(false)
 const { errors, validate } = useZodForm(UserLoginSchema, form)
 const router = useRouter()
 
+const useHandleSubmit = UseHandleSubmit()
+
 const handleSubmit = async () => {
     const result = validate()
     if (!result.success) return
     isDisable.value = true
     try {
-        const response: any = await $fetch(`${runtimeConfig.public.apiUrl}/user/login`, {
-            method: 'POST',
-            body: result.data
-        })
+        const response: any = await useHandleSubmit.post('/user/login',result.data)
         const {message,data,token} = response
         
         toast.success(message)
