@@ -17,9 +17,3 @@
     </div>
   </section>
 </template>
-
-<style scoped>
-.hide-scroll {
-  scrollbar-width: none;
-}
-</style>
