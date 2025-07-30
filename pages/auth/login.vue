@@ -24,11 +24,13 @@
                         v-model="form.email" size-class="p-4 rounded-full" :errorMessage="errors.email as string">
                     </InputCustom>
                     <InputCustom label="Password" id="password" type="password" v-model="form.password"
-                        size-class="p-4 rounded-full"  :errorMessage="errors.password as string">
+                        size-class="p-4 rounded-full" :errorMessage="errors.password as string">
                     </InputCustom>
                     <div class="space-y-2">
-                        <BaseBtn class="bg-yellow-retro border hover:bg-yellow-300 transition-colors duration-300">
-                            Masuk
+                        <BaseBtn class="bg-yellow-retro border hover:bg-yellow-300 transition-colors duration-300"
+                            :disabled="isDisable">
+                            <p v-if="!isDisable">Masuk</p>
+                            <Spinner v-else />
                         </BaseBtn>
                         <div class="flex flex-row text-sm justify-between">
                             <p>
@@ -52,33 +54,59 @@
             <!-- End Form -->
             <Back />
         </Wrapper>
-
         <!-- End Wrapper -->
     </Container>
 </template>
 
 <script setup lang="ts">
+import { Icon } from '#components'
+import { useToast } from 'vue-toastification'
 import { useZodForm } from '~/composables/useZodForm'
 import { UserLoginSchema } from '~/model/formSchema'
+
+const runtimeConfig = useRuntimeConfig()
 
 definePageMeta({
     layout: false
 })
+const toast = useToast()
 
 const form = reactive({
-  email: '',
-  password: ''
+    email: '',
+    password: ''
 })
 
-const { errors, validate } = useZodForm(UserLoginSchema, form)
+const isDisable = ref(false)
 
-const handleSubmit = () => {
-  const result = validate()
-  if (result.success) {
-    // Kirim ke API
-    console.log('Form Valid', result.data)
-  } else {
-    console.warn('Form tidak valid')
-  }
+const { errors, validate } = useZodForm(UserLoginSchema, form)
+const router = useRouter()
+
+const handleSubmit = async () => {
+    const result = validate()
+    if (!result.success) return
+    isDisable.value = true
+    try {
+        const response: any = await $fetch(`${runtimeConfig.public.apiUrl}/user/login`, {
+            method: 'POST',
+            body: result.data
+        })
+        const {message,data,token} = response
+        
+        toast.success(message)
+
+        if (!data.role) {
+            setTimeout(()=>{
+                router.push('/role')
+            },1500)
+        }
+        
+    } catch (error: any) {
+        const message =
+            error?.data?.message || error?.statusMessage || 'Terjadi kesalahan saat login.'
+        toast.error(message)
+    } finally {
+        isDisable.value = false
+    }
 }
+
 </script>
