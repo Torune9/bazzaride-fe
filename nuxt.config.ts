@@ -19,4 +19,12 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
+  devServer : {
+    port : 5000
+  },
+  runtimeConfig : {
+    public : {
+      apiUrl : process.env.NUXT_PUBLIC_API_URL
+    }
+  }
 });
