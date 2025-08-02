@@ -21,7 +21,7 @@ onMounted(async () => {
         console.log(response);
         toast.success(response.message)
         setTimeout(()=>{
-            router.push('/events')
+            router.push('/role')
         },1500)
     } catch (error) {
         toast.error(error)
