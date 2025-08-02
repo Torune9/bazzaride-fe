@@ -47,7 +47,7 @@
                 </form>
                 <BaseBtn
                     class="bg-purple-retro text-white flex items-center justify-center gap-x-2 hover:bg-purple-800 duration-300 transition-colors"
-                    type="button">
+                    type="button" @click="handleGoogleAuth">
                     <Icon name="uil:google" style="color: white; font-size: 25px" />Login dengan Google
                 </BaseBtn>
             </div>
@@ -106,6 +106,10 @@ const handleSubmit = async () => {
     } finally {
         isDisable.value = false
     }
+}
+
+const handleGoogleAuth = async()=>{
+   window.location.href = 'http://localhost:3000/api/auth/google'
 }
 
 </script>
