@@ -18,7 +18,18 @@ export const UseHandleSubmit = () => {
         }
     }
 
+    const get = async (url: string) => {
+        try {
+            const response = await $fetch(`${runtimeConfig.public.apiUrl}${url}`, {
+                method: 'GET',
+            })
+            return response
+        } catch (error) {
+            throw error
+        }
+    }
     return {
-        post
+        post,
+        get
     }
 }
