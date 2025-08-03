@@ -10,18 +10,13 @@ import { useToast } from 'vue-toastification'
 definePageMeta({ layout: false })
 
 const router = useRouter()
-const routes = useRoute()
 
 const toast = useToast()
 const useHandleApi = UseHandleApi()
 
 const getUser = async () => {
-
     try {
-        const response :any = await $fetch('http://localhost:3000/api/user/current/account', {
-            method: 'GET',
-            credentials: 'include'
-        })
+        const response :any = await useHandleApi.get('/user/current/account')
         toast.success(response.message)
         if (!response.roleId) {
             setTimeout(()=>{
