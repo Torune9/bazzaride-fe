@@ -1,6 +1,6 @@
 import type { NitroFetchOptions } from 'nitropack'
 
-export const UseHandleSubmit = () => {
+export const UseHandleApi = () => {
     const runtimeConfig = useRuntimeConfig()
 
     const post = async <T = any>(
@@ -22,9 +22,14 @@ export const UseHandleSubmit = () => {
         try {
             const response = await $fetch(`${runtimeConfig.public.apiUrl}${url}`, {
                 method: 'GET',
+                credentials : 'include'
             })
+            console.log(response);
+            
             return response
         } catch (error) {
+            console.log(error.message);
+            
             throw error
         }
     }
