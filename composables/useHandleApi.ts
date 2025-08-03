@@ -10,7 +10,8 @@ export const UseHandleApi = () => {
         try {
             const response = await $fetch<T>(`${runtimeConfig.public.apiUrl}${url}`, {
                 method: 'POST',
-                body: payload
+                body: payload,
+                credentials : 'include',
             })
             return response
         } catch (error) {
