@@ -81,15 +81,16 @@ const isDisable = ref(false)
 const { errors, validate } = useZodForm(UserLoginSchema, form)
 const router = useRouter()
 
-const useHandleSubmit = UseHandleSubmit()
+const useHandleSubmit = UseHandleApi()
 
 const handleSubmit = async () => {
     const result = validate()
     if (!result.success) return
     isDisable.value = true
     try {
-        const response: any = await useHandleSubmit.post('/user/login',result.data)
-        const {message,data,token} = response
+        
+        const response: any = await useHandleSubmit.post('/user/login', result.data)
+        const { message, data } = response
         
         toast.success(message)
 
@@ -98,7 +99,7 @@ const handleSubmit = async () => {
                 router.push('/role')
             },1500)
         }
-        
+
     } catch (error: any) {
         const message =
             error?.data?.message || error?.statusMessage || 'Terjadi kesalahan saat login.'
@@ -108,8 +109,8 @@ const handleSubmit = async () => {
     }
 }
 
-const handleGoogleAuth = async()=>{
-   window.location.href = 'http://localhost:3000/api/auth/google'
+const handleGoogleAuth = async () => {
+    window.location.href = 'http://localhost:3000/api/auth/google'
 }
 
 </script>
