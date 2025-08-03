@@ -13,16 +13,21 @@ const router = useRouter()
 const routes = useRoute()
 
 const toast = useToast()
+const useHandleApi = UseHandleApi()
 
-onMounted(async () => {
-    const { id } = routes.query
+const getUser = async () => {
+
     try {
-        const response : any = await $fetch(`http://localhost:3000/api/user/me/${id}`)
-        console.log(response);
+        const response :any = await $fetch('http://localhost:3000/api/user/current/account', {
+            method: 'GET',
+            credentials: 'include'
+        })
         toast.success(response.message)
-        setTimeout(()=>{
-            router.push('/role')
-        },1500)
+        if (!response.roleId) {
+            setTimeout(()=>{
+                router.push('/role')
+            },1500)
+        }
     } catch (error) {
         toast.error(error)
         setTimeout(()=>{
@@ -30,5 +35,8 @@ onMounted(async () => {
         },1500)
         console.error('Gagal ambil user:', error)
     }
+}
+onMounted(() => {
+    getUser()
 })
 </script>
