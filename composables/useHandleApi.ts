@@ -25,7 +25,6 @@ export const UseHandleApi = () => {
                 method: 'GET',
                 credentials : 'include'
             })
-            console.log(response);
             
             return response
         } catch (error) {
