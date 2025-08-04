@@ -1,4 +1,5 @@
 <template>
+    <Loading v-if="isLoading"/>
     <div class="w-screen min-h-screen flex flex-col justify-center font-inter px-10 gap-y-8 lg:px-40">
         <h1 class="text-2xl w-full">
             Sebelum melanjutkan,<br>silahkan pilih peran anda
@@ -34,7 +35,7 @@
             </div>
         </Wrapper>
         <div class="text-end" v-if="roleOps">
-            <CtaBtn class="w-42" rounded="xl">
+            <CtaBtn class="w-42" rounded="xl" @click="handleContinue">
                 Lanjut
             </CtaBtn>
         </div>
@@ -48,6 +49,14 @@ definePageMeta({
     layout: false
 })
 
+const isLoading = ref(false)
 const roleOps = ref(0)
+
+const handleContinue = ()=>{
+    isLoading.value = true
+    setTimeout(()=>{
+        isLoading.value = false
+    },3000)
+}
 
 </script>
