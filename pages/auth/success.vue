@@ -16,7 +16,7 @@ const useHandleApi = UseHandleApi()
 
 const getUser = async () => {
     try {
-        const response :any = await useHandleApi.get('/user/current/account')
+        const response :any = await useHandleApi.get('/user/me')
         toast.success(response.message)
         if (!response.roleId) {
             setTimeout(()=>{
