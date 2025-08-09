@@ -1,4 +1,5 @@
 <template>
+    <Loading v-if="isLoading"/>
     <Container class="px-4 flex items-center justify-center lg:px-8 gap-x-10">
         <div
             class="w-full h-screen max-lg:hidden flex flex-col gap-y-4 justify-center items-center bg-torqouise-retro rounded-tr-full rounded-tl-full">
@@ -63,11 +64,12 @@ import { Icon } from '#components'
 import { useToast } from 'vue-toastification'
 import { useZodForm } from '~/composables/useZodForm'
 import { UserLoginSchema } from '~/model/formSchema'
+import { userStore } from '~/store/userStore'
 
 const runtimeConfig = useRuntimeConfig()
 
 definePageMeta({
-    layout: false
+    layout: false,
 })
 const toast = useToast()
 
@@ -76,28 +78,45 @@ const form = reactive({
     password: ''
 })
 
+const isLoading = ref(false)
+
 const isDisable = ref(false)
 
 const { errors, validate } = useZodForm(UserLoginSchema, form)
 const router = useRouter()
 
 const useHandleSubmit = UseHandleApi()
+const storeUser = userStore()
 
 const handleSubmit = async () => {
     const result = validate()
     if (!result.success) return
     isDisable.value = true
+    isLoading.value = true
     try {
-        
+
         const response: any = await useHandleSubmit.post('/user/login', result.data)
         const { message, data } = response
-        
+
         toast.success(message)
 
         if (!data.role) {
-            setTimeout(()=>{
+            setTimeout(() => {
                 router.push('/role')
-            },1500)
+            }, 1500)
+        }
+
+        storeUser.userLogin = {
+            ...response.data,
+            role: response.role
+        }
+
+        storeUser.isLogged = true
+        
+        if (response.role) {
+            setTimeout(() => {
+                router.push('/events')
+            }, 1500)
         }
 
     } catch (error: any) {
@@ -105,12 +124,15 @@ const handleSubmit = async () => {
             error?.data?.message || error?.statusMessage || 'Terjadi kesalahan saat login.'
         toast.error(message)
     } finally {
-        isDisable.value = false
+       setTimeout(()=>{
+         isLoading.value = false
+         isDisable.value = false
+       },1500)
     }
 }
 
 const handleGoogleAuth = async () => {
-    window.location.href = 'http://localhost:3000/api/auth/google'
+    window.location.href = `${runtimeConfig.public.apiUrl}/auth/google`
 }
 
 </script>
