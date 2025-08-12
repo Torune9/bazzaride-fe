@@ -8,8 +8,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
     '/auth/login',
     '/auth/register',
     '/auth/success',
-    '/event',
-    '/participant'
+    '/events',
+    '/participants'
   ]
 
   // Halaman root biarkan lewat
