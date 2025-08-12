@@ -25,6 +25,10 @@
                             Profile
                         </NuxtLink>
                     </li>
+                    <li
+                        class="px-2 py-1 rounded-md lg:hidden bg-red-600 text-center text-white cursor-pointer" v-if="isLogged" >
+                            Logout
+                    </li>
                 </ul>
                 <div class="flex flex-row gap-2 p-1 max-lg:w-full">
                     <NuxtLink
