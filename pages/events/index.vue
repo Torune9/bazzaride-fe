@@ -9,7 +9,8 @@
             </h3>
         </div>
         <div class="grid gap-6 sm:grid-cols-2 lg:order-1">
-            <!-- <CardEvent :event="event" v-for="event in events.splice(0,2)" /> -->
+            <Skeleton v-for="e in 6" v-if="latestEvent.length == 0" />
+            <CardEvent :event="event" v-for="event in latestEvent" v-else />
         </div>
     </div>
     <TitleSection class="text-4xl">Daftar Event</TitleSection>
@@ -18,10 +19,9 @@
     </div>
     <!-- Daftar Event -->
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <CardEvent :event="event" v-for="event in events" />
-        <div v-if="loading" class="col-span-full flex items-center justify-center">
-            <Spinner />
-        </div>
+        <Skeleton v-for="e in 6" v-if="loading" />
+        <CardEvent :event="event" v-for="event in events" v-else />
+        <ErrorMessage v-if="isError" class="col-span-full" />
     </div>
 </template>
 
@@ -33,10 +33,12 @@ definePageMeta({
 
 const api = UseHandleApi()
 const events = ref<any[]>([])
+const latestEvent = ref<any[]>([])
 
 const page = ref(0)
 const loading = ref(false)
 const finished = ref(false)
+const isError = ref(false)
 
 const getEvent = async () => {
     if (loading.value || finished.value) return
@@ -52,8 +54,20 @@ const getEvent = async () => {
         }
     } catch (error) {
         console.error(error)
+        isError.value = true
     } finally {
         loading.value = false
+    }
+}
+
+const getLatestEvent = async () => {
+    try {
+        const response: any = await api.get('/event/latest')
+        latestEvent.value = response.data
+        console.log(response);
+    } catch (error) {
+        console.log(error);
+
     }
 }
 
@@ -65,6 +79,7 @@ const handleScroll = () => {
 }
 
 onMounted(() => {
+    getLatestEvent()
     getEvent()
     window.addEventListener('scroll', handleScroll)
 })
