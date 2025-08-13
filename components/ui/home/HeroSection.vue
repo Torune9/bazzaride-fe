@@ -15,15 +15,34 @@
                     Gabung Sekarang
                 </CtaBtn>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10">
-                    <StatItem value="110+" label="Event" />
+                    <StatItem :value="total" label="Event" />
                     <StatItem value="200+" label="Anggota" />
                     <StatItem value="10+" label="On air" />
                     <StatItem value="400+" label="Event berhasil" />
                 </div>
             </div>
             <div class="max-lg:hidden w-full h-full flex justify-end items-center">
-                <NuxtImg src="/hero.png" class="rounded-full w-4/5"/>
+                <NuxtImg src="/hero.png" class="rounded-full w-4/5" />
             </div>
         </div>
     </section>
 </template>
+
+<script setup lang="ts">
+const api = UseHandleApi()
+const total = ref(0)
+const getTotalEvent = async ()=>{
+    try {
+        const response = await api.get('/event')
+        total.value = response.total
+        console.log(response.total);
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+onMounted(()=>{
+    getTotalEvent()
+})
+</script>
