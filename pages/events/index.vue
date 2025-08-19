@@ -21,7 +21,7 @@
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <Skeleton v-for="e in 6" v-if="loading" />
         <CardEvent :event="event" v-for="event in events" v-else />
-        <ErrorMessage v-if="isError" class="col-span-full" />
+        <ErrorMessage v-if="isError && !loading" class="col-span-full" />
     </div>
 </template>
 
