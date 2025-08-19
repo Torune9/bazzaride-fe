@@ -19,15 +19,15 @@
                             Participants
                         </NuxtLink>
                     </li>
-                    <li
-                        class="p-2 hover:bg-purple-retro/80 rounded-md hover:text-white transition-colors lg:hidden" v-if="isLogged" >
+                    <li class="p-2 hover:bg-purple-retro/80 rounded-md hover:text-white transition-colors lg:hidden"
+                        v-if="isLogged">
                         <NuxtLink class="flex" to="/profile/1">
                             Profile
                         </NuxtLink>
                     </li>
-                    <li
-                        class="px-2 py-1 rounded-md lg:hidden bg-red-600 text-center text-white cursor-pointer" v-if="isLogged" >
-                            Logout
+                    <li class="px-2 py-1 rounded-md lg:hidden bg-red-600 text-center text-white cursor-pointer"
+                        v-if="isLogged" @click="handeLogout">
+                        Logout
                     </li>
                 </ul>
                 <div class="flex flex-row gap-2 p-1 max-lg:w-full">
@@ -49,10 +49,26 @@
 
 <script setup lang="ts">
 import { NuxtLink } from '#components';
+import { useToast } from 'vue-toastification';
 import { userStore } from '~/store/userStore';
 
 const isOpen = ref(false)
+const api = UseHandleApi()
+const toast = useToast()
 
 const storeUser = userStore()
 const { isLogged } = storeToRefs(storeUser)
+
+const handeLogout = async () => {
+    storeUser.$reset()
+    try {
+        const response = await api.post('/user/logout')
+        toast.success('logout berhasil')
+        localStorage.clear()
+        console.log(response);
+    } catch (error) {
+        console.log(error);
+    }
+
+}
 </script>
