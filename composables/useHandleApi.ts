@@ -1,17 +1,19 @@
-import type { NitroFetchOptions } from 'nitropack'
-
 export const UseHandleApi = () => {
     const runtimeConfig = useRuntimeConfig()
 
     const post = async <T = any>(
         url: string,
-        payload: object
+        payload?: object
     ): Promise<T> => {
+
         try {
+            const isFormData = payload instanceof FormData
+
             const response = await $fetch<T>(`${runtimeConfig.public.apiUrl}${url}`, {
                 method: 'POST',
                 body: payload,
                 credentials: 'include',
+                headers: isFormData ? {} : { 'Content-Type': 'application/json' }
             })
             return response
         } catch (error) {
@@ -39,7 +41,7 @@ export const UseHandleApi = () => {
         payload: object
     ): Promise<T> => {
         console.log(payload);
-        
+
         try {
             const response = await $fetch<T>(`${runtimeConfig.public.apiUrl}${url}`, {
                 method: 'PATCH',
