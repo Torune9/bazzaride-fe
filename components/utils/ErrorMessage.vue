@@ -1,5 +1,11 @@
 <template>
     <p class="text-red-700 text-center">
-        Something went wrong
+        {{ message }}
     </p>
 </template>
+
+<script setup lang="ts">
+const props = defineProps<{
+    message?: string
+}>()
+</script>
