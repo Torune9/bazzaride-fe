@@ -3,12 +3,7 @@
     <div class="w-full flex justify-between items-center py-2">
       <h1 class="font-semibold sm:text-3xl text-xl">Profile Information</h1>
 
-      <ButtonAction
-        form="profile-form"
-        :mode="mode"
-        title="Create Profile"
-        :loading="isLoading"
-      />
+      <ButtonAction form="profile-form" :mode="mode" :loading="isLoading" />
     </div>
     <div class="mt-4 max-w-max flex items-center gap-x-4">
       <div class="w-fit h-full flex p-2 rounded-md flex-col items-center gap-2">
@@ -57,7 +52,11 @@
       </div>
       <div class="flex flex-col space-y-0.5">
         <h1 class="font-semibold sm:text-2xl text-xl line-clamp-2">
-          Ujang Penantang
+          {{
+            `${props.profile?.firstName || "John"} ${
+              props.profile?.lastName || "Doe"
+            }`
+          }}
         </h1>
         <p class="text-sm font-light">Penyelenggara</p>
       </div>
@@ -76,6 +75,7 @@
           type="text"
           id="first-name"
           placeholder="FirstName..."
+          :errorMessage="errors.firstName as string"
         />
         <InputCustom
           v-model="payloadProfile.lastName"
@@ -84,6 +84,7 @@
           type="text"
           id="last-name"
           placeholder="Lastname..."
+          :errorMessage="errors.lastName as string"
         />
 
         <InputCustom
@@ -93,6 +94,7 @@
           type="text"
           id="description"
           placeholder="Lorem ipsum dolor si amet"
+          :errorMessage="errors.description as string"
         />
       </div>
     </form>
@@ -101,22 +103,61 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+import { ProfileSchema } from "~/model/formSchema";
+const config = useRuntimeConfig();
+
+const props = defineProps<{
   mode: "edit" | "create";
+  profile: any;
+  userId: string;
 }>();
 
 const { previewImg, uploadFile, resetFile, handleUploadFile } = useUploadFile();
+const token = ref(
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIyOTljYjUzLWEwZjgtNDBlNi1hOTI1LTI4ODBhYzdmNzI1YiIsInVzZXJuYW1lIjoiYWRtaW4xIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3NTQwNjI5MDgsImV4cCI6MTc1NDE0OTMwOH0.hXXPi154H73CCdMficqHSBlyx0pimQBgV1noWisb4D4"
+);
 
 const isLoading = ref<boolean>(false);
 const payloadProfile = reactive({
-  firstName: "",
-  lastName: "",
-  description: "",
-  image: null,
+  userId: props.userId,
+  firstName: props.profile?.firstName || "",
+  lastName: props.profile?.lastName || "",
+  description: props.profile?.description || "",
+  image: props.profile?.image || null,
 });
 
-const handleSubmitFormProfile = () => {
+const { errors, validate } = useZodForm(ProfileSchema, payloadProfile);
+
+const handleSubmitFormProfile = async () => {
+  const result = validate();
+  if (!result.success) return;
   isLoading.value = !isLoading.value;
+  try {
+    const formData = new FormData();
+    formData.append("userId", props.userId);
+    formData.append("firstName", payloadProfile.firstName);
+    formData.append("lastName", payloadProfile.lastName);
+    formData.append("description", payloadProfile.description);
+    if (uploadFile.value) {
+      formData.append("file", uploadFile.value);
+    }
+    const url =
+      props.mode === "create"
+        ? `${config.public.apiUrl}/profile`
+        : `${config.public.apiUrl}/profile/${props.profile.id}`;
+    const method = props.mode === "create" ? "POST" : "PATCH";
+    await fetch(url, {
+      method,
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+      body: formData,
+    });
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = !isLoading.value;
+  }
 };
 
 const handleRemoveImage = () => {
@@ -124,7 +165,10 @@ const handleRemoveImage = () => {
   payloadProfile.image = null;
 };
 
-const previewImage = previewImg;
+// const previewImage = previewImg;
+const previewImage = computed(() =>
+  previewImg.value ? previewImg.value : payloadProfile.image
+);
 
 watch(uploadFile, (file: any) => {
   payloadProfile.image = file;

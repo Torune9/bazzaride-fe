@@ -32,8 +32,14 @@
     <main class="flex-1 p-4 overflow-y-auto">
       <!-- Profile Content -->
       <div class="py-2 px-6 shrink-0">
-        <component :is="currentTab"></component>
-        <AddressForm v-if="currentTab == profileComponent"/>
+        <component
+          :is="currentTab"
+          :profile="profileData"
+          :userId="userId"
+          :mode="formMode"
+          :id="id"
+        ></component>
+        <AddressForm v-if="currentTab == profileComponent" />
         <!-- <ProfileForm :mode="formMode" />
         <AddressForm /> -->
       </div>
@@ -49,11 +55,13 @@
 </template>
 
 <script setup lang="ts">
-import type { Component, ConcreteComponent } from 'vue';
+import type { Component, ConcreteComponent } from "vue";
 
 definePageMeta({
   layout: false,
 });
+
+const config = useRuntimeConfig();
 
 const formMode = ref<"create" | "edit">("create");
 const menuItems: { key: string; label: string; icon: string }[] = [
@@ -63,22 +71,49 @@ const menuItems: { key: string; label: string; icon: string }[] = [
 ];
 const route = useRoute();
 const router = useRouter();
+const id = route.params.id as String;
+const userId = ref("b299cb53-a0f8-40e6-a925-2880ac7f725b");
+const profileData = ref(null);
+const token = ref(
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIyOTljYjUzLWEwZjgtNDBlNi1hOTI1LTI4ODBhYzdmNzI1YiIsInVzZXJuYW1lIjoiYWRtaW4xIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3NTQwNjI5MDgsImV4cCI6MTc1NDE0OTMwOH0.hXXPi154H73CCdMficqHSBlyx0pimQBgV1noWisb4D4"
+);
+
+const getProfile = async () => {
+  try {
+    const res = await $fetch(
+      `${config.public.apiUrl}/profile/${userId.value}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
+      }
+    );
+
+    
+    
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const profileComponent = resolveComponent("ProfileForm") as ConcreteComponent;
 const eventComponent = resolveComponent("EventForm") as ConcreteComponent;
 const storeComponent = resolveComponent("StoreForm") as ConcreteComponent;
 
-const currentTab = shallowRef<Component>(resolveComponent("ProfileForm") as ConcreteComponent)
+const currentTab = shallowRef<Component>(
+  resolveComponent("ProfileForm") as ConcreteComponent
+);
 const isSidebarOpen = ref<boolean>(false);
 
 const selectedTab = (key: string) => {
   switch (key) {
-    case 'profile':
-      return currentTab.value = profileComponent;
-    case 'event':
-      return currentTab.value = eventComponent
-    case 'store':
-      return currentTab.value = storeComponent
+    case "profile":
+      return (currentTab.value = profileComponent);
+    case "event":
+      return (currentTab.value = eventComponent);
+    case "store":
+      return (currentTab.value = storeComponent);
   }
   // currentTab.value = key;
   // router.replace({ query: { tab: key } });
@@ -99,4 +134,6 @@ const selectedTab = (key: string) => {
 //     }
 //   }
 // );
+
+onMounted(() => getProfile());
 </script>

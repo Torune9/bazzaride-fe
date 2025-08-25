@@ -10,14 +10,19 @@
       class="{{ loading ? 'animate-spin' : '' }}"
     />
     <span class="text-sm">
-      {{ loading ? "Loading..." : mode === "edit" ? ` ${title}` : ` ${title}` }}
+      {{
+        loading
+          ? "Loading..."
+          : mode === "edit"
+          ? "Edit Profile"
+          : "Create Profile"
+      }}
     </span>
   </button>
 </template>
 
 <script setup lang="ts">
 defineProps<{
-  title: string;
   form?: string;
   mode: "edit" | "create";
   loading?: boolean;
