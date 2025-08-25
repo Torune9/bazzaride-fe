@@ -8,12 +8,13 @@
             <NuxtLink :to="`/events/${event.id}`">
                 <button
                     class="rounded-full p-2 cursor-pointer h-10 w-10 lg:h-12 lg:w-12 flex justify-center items-center justify-self-end bg-torqouise-retro hover:bg-green-600 transition-colors duration-300">
-                    <Icon name="heroicons:arrow-right-16-solid" style="font-size: 2em; color: #fff; transform: rotate(-25deg);" />
+                    <Icon name="heroicons:arrow-right-16-solid"
+                        style="font-size: 2em; color: #fff; transform: rotate(-25deg);" />
                 </button>
             </NuxtLink>
         </div>
         <div class="w-full" v-if="event.category">
-            <h3 class="text-white w-max px-10 py-1 bg-purple-retro rounded-tr-full">{{ event.category }}</h3>
+            <h3 class="text-white w-max px-10 py-1 bg-purple-retro rounded-tr-full">{{ event.category.name }}</h3>
         </div>
     </div>
 </template>
@@ -25,7 +26,10 @@ const props = defineProps<{
         name: string,
         date: string,
         quota?: number
-        category?: string
+        category?: {
+            name: string,
+            id: string,
+        }
     };
 }>();
 

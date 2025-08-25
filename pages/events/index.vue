@@ -9,7 +9,8 @@
             </h3>
         </div>
         <div class="grid gap-6 sm:grid-cols-2 lg:order-1">
-            <CardEvent :event="event" v-for="event in newEst" />
+            <Skeleton v-for="e in 6" v-if="latestEvent.length == 0" />
+            <CardEvent :event="event" v-for="event in latestEvent" v-else />
         </div>
     </div>
     <TitleSection class="text-4xl">Daftar Event</TitleSection>
@@ -18,46 +19,72 @@
     </div>
     <!-- Daftar Event -->
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <CardEvent :event="event" v-for="event in events" />
+        <Skeleton v-for="e in 6" v-if="loading" />
+        <CardEvent :event="event" v-for="event in events" v-else />
+        <ErrorMessage v-if="isError && !loading" class="col-span-full" />
     </div>
 </template>
 
 <script setup lang="ts">
-const search = ref("");
-const events = [
-    {
-        id: '1',
-        name:
-            "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima, vitae!",
-        quota: 100,
-        category: 'food',
-        date: "10 juni 2025",
-    },
-    {
-        id: '2',
-        name:
-            "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima, vitae!",
-        quota: 100,
-        category: 'food',
-        date: "10 juni 2025",
-    },
-    {
-        id: '3',
-        name:
-            "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima, vitae!",
-        quota: 100,
-        category: 'food',
-        date: "10 juni 2025",
-    },
-    {
-        id: '4',
-        name:
-            "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima, vitae!",
-        quota: 100,
-        category: 'food',
-        date: "10 juni 2025",
-    },
-];
-const newEst = events.slice(0, 2);
+const search = ref("")
+definePageMeta({
+    hideFooter: true,
+})
 
+const api = UseHandleApi()
+const events = ref<any[]>([])
+const latestEvent = ref<any[]>([])
+
+const page = ref(0)
+const loading = ref(false)
+const finished = ref(false)
+const isError = ref(false)
+
+const getEvent = async () => {
+    if (loading.value || finished.value) return
+    loading.value = true
+    try {
+        const response: any = await api.get(`/event?page=${page.value}`)
+
+        if (response.data.length > 0) {
+            events.value.push(...response.data)
+            page.value++
+        } else {
+            finished.value = true
+        }
+    } catch (error) {
+        console.error(error)
+        isError.value = true
+    } finally {
+        loading.value = false
+    }
+}
+
+const getLatestEvent = async () => {
+    try {
+        const response: any = await api.get('/event/latest')
+        latestEvent.value = response.data
+        console.log(response);
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
+const handleScroll = () => {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement
+    if (scrollTop + clientHeight >= scrollHeight - 10) {
+        getEvent()
+    }
+}
+
+onMounted(() => {
+    getLatestEvent()
+    getEvent()
+    window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll)
+})
 </script>

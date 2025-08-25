@@ -1,4 +1,5 @@
 <template>
+    <Loading v-if="isLoading" />
     <div class="w-screen min-h-screen flex flex-col justify-center font-inter px-10 gap-y-8 lg:px-40">
         <h1 class="text-2xl w-full">
             Sebelum melanjutkan,<br>silahkan pilih peran anda
@@ -34,7 +35,7 @@
             </div>
         </Wrapper>
         <div class="text-end" v-if="roleOps">
-            <CtaBtn class="w-42" rounded="xl">
+            <CtaBtn class="w-42" rounded="xl" @click="handleContinue">
                 Lanjut
             </CtaBtn>
         </div>
@@ -44,10 +45,39 @@
 <script setup lang="ts">
 import man from '@/assets/images/man.png'
 import manager from '@/assets/images/manager.png'
+import { userStore } from '~/store/userStore'
 definePageMeta({
     layout: false
 })
 
+const isLoading = ref(false)
+
+const router = useRouter()
 const roleOps = ref(0)
+
+const storeUser = userStore()
+
+const handleApi = UseHandleApi()
+
+const handleContinue = async () => {
+    isLoading.value = true
+    try {
+
+        const response = await handleApi.patch(`/user/${storeUser.userLogin.id}`, {
+            roleId: roleOps.value
+        })
+        
+        if (response.data.roleId) {
+            router.push('/events')
+        }
+        console.log(response);
+
+    } catch (error) {
+        console.log(error);
+
+    } finally {
+        isLoading.value = false
+    }
+}
 
 </script>

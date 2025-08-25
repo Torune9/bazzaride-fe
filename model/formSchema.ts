@@ -13,5 +13,8 @@ export const ProfileSchema = z.object({
   firstName: z.coerce.string().nonempty("firstname tidak boleh kosong"),
   lastName: z.coerce.string().nonempty("lastname tidak boleh kosong"),
   description: z.coerce.string().nonempty("description tidak boleh kosong"),
-  image: z.string().optional(),
+  image: z.union([
+    z.string().url("Image harus berupa URL valid").optional().nullable(),
+    z.instanceof(File).optional().nullable(),
+  ]),
 });

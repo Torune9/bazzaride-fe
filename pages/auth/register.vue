@@ -58,9 +58,9 @@ const payload = reactive({
   password: "",
 });
 
-const { errors, validate } = useZodForm(UserRegisterSchema, payload)
+const { errors, validate ,resetForm} = useZodForm(UserRegisterSchema, payload)
 
-const useHandleSubmit = UseHandleSubmit()
+const useHandleApi = UseHandleApi()
 const router = useRouter()
 const toast = useToast()
 
@@ -70,7 +70,7 @@ const handleSubmit = async () => {
     return
   }
   try {
-    const response = await useHandleSubmit.post('/user/register', result.data)
+    const response = await useHandleApi.post('/user/register', result.data)
     const { message, data, statusCode } = response
     if (statusCode == 201) {
       toast.success(message)
@@ -82,19 +82,13 @@ const handleSubmit = async () => {
       email: '',
       password: ''
     })
-
+    resetForm()
   } catch (error: any) {
     const { message, statusCode } = error.data
     if (statusCode == 409) {
       return toast.error('Email suda terpakai')
     }
     console.log(error.data);
-  }
-  finally {
-    Object.keys(errors.value).forEach((key) => {
-      (errors.value as Record<string, string>)[key] = ''
-    })
-
   }
 }
 </script>

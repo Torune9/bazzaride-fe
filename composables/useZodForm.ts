@@ -8,11 +8,14 @@ export function useZodForm<T extends ZodRawShape>(
   form: Record<keyof T, any>
 ) {
   const errors = ref<Record<keyof T, string | null>>({} as any)
+  const isSuspended = ref(false)
 
   for (const key in form) {
     watch(() => form[key], (value) => {
+      if (isSuspended.value) return
+
       const fieldSchema = schema.shape[key]
-      const result = fieldSchema.safeParse(value)      
+      const result = fieldSchema.safeParse(value)
       errors.value[key] = result.success ? null : result.error.issues[0].message
     })
   }
@@ -28,5 +31,16 @@ export function useZodForm<T extends ZodRawShape>(
     return parsed
   }
 
-  return { errors, validate }
+  const resetForm = (initialValue: Partial<Record<keyof T, any>> = {}) => {
+    isSuspended.value = true
+    for (const key in form) {
+      form[key] = initialValue[key] ?? ''
+      errors.value[key] = null
+    }
+    nextTick(() => {
+      isSuspended.value = false
+    })
+  }
+
+  return { errors, validate, resetForm }
 }

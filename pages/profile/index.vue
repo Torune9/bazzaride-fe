@@ -32,13 +32,7 @@
     <main class="flex-1 p-4 overflow-y-auto">
       <!-- Profile Content -->
       <div class="py-2 px-6 shrink-0">
-        <component
-          :is="currentTab"
-          :profile="profileData"
-          :userId="userId"
-          :mode="formMode"
-          :id="id"
-        ></component>
+        <component :is="currentTab"></component>
         <AddressForm v-if="currentTab == profileComponent" />
         <!-- <ProfileForm :mode="formMode" />
         <AddressForm /> -->
@@ -61,41 +55,11 @@ definePageMeta({
   layout: false,
 });
 
-const config = useRuntimeConfig();
-
-const formMode = ref<"create" | "edit">("create");
 const menuItems: { key: string; label: string; icon: string }[] = [
   { key: "profile", label: "Profile", icon: "uil:user" },
   { key: "event", label: "Event", icon: "uil:calendar" },
   { key: "store", label: "Store", icon: "uil:shop" },
 ];
-const route = useRoute();
-const router = useRouter();
-const id = route.params.id as String;
-const userId = ref("b299cb53-a0f8-40e6-a925-2880ac7f725b");
-const profileData = ref(null);
-const token = ref(
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIyOTljYjUzLWEwZjgtNDBlNi1hOTI1LTI4ODBhYzdmNzI1YiIsInVzZXJuYW1lIjoiYWRtaW4xIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3NTQwNjI5MDgsImV4cCI6MTc1NDE0OTMwOH0.hXXPi154H73CCdMficqHSBlyx0pimQBgV1noWisb4D4"
-);
-
-const getProfile = async () => {
-  try {
-    const res = await $fetch(
-      `${config.public.apiUrl}/profile/${userId.value}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-        },
-      }
-    );
-
-    
-    
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 const profileComponent = resolveComponent("ProfileForm") as ConcreteComponent;
 const eventComponent = resolveComponent("EventForm") as ConcreteComponent;
@@ -115,25 +79,5 @@ const selectedTab = (key: string) => {
     case "store":
       return (currentTab.value = storeComponent);
   }
-  // currentTab.value = key;
-  // router.replace({ query: { tab: key } });
 };
-
-// onMounted(() => {
-//   const tabQuery = route.query.tab;
-//   if (tabQuery === "event" || tabQuery === "profile") {
-//     currentTab.value = tabQuery;
-//   }
-// });
-
-// watch(
-//   () => route.query.tab,
-//   (newVal) => {
-//     if (newVal === "event" || newVal === "profile") {
-//       currentTab.value = newVal;
-//     }
-//   }
-// );
-
-onMounted(() => getProfile());
 </script>

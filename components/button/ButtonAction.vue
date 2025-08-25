@@ -7,16 +7,10 @@
   >
     <Icon
       :name="loading ? 'line-md:loading-twotone-loop' : 'uil:edit'"
-      class="{{ loading ? 'animate-spin' : '' }}"
+      :class="loading ? 'animate-spin' : ''"
     />
     <span class="text-sm">
-      {{
-        loading
-          ? "Loading..."
-          : mode === "edit"
-          ? "Edit Profile"
-          : "Create Profile"
-      }}
+      {{ loading ? "Loading..." : mode === "edit" ? "Edit " : "Create " }}
     </span>
   </button>
 </template>

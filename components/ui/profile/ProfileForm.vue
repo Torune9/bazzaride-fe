@@ -53,12 +53,12 @@
       <div class="flex flex-col space-y-0.5">
         <h1 class="font-semibold sm:text-2xl text-xl line-clamp-2">
           {{
-            `${props.profile?.firstName || "John"} ${
-              props.profile?.lastName || "Doe"
+            `${profileData?.firstName || "John"} ${
+              profileData?.lastName || "Doe"
             }`
           }}
         </h1>
-        <p class="text-sm font-light">Penyelenggara</p>
+        <p class="text-sm font-light">{{ role }}</p>
       </div>
     </div>
     <div class="w-full mt-4 border-1"></div>
@@ -104,59 +104,66 @@
 
 <script setup lang="ts">
 import { ProfileSchema } from "~/model/formSchema";
-const config = useRuntimeConfig();
+import { userStore } from "~/store/userStore";
 
-const props = defineProps<{
-  mode: "edit" | "create";
-  profile: any;
-  userId: string;
-}>();
+const api = UseHandleApi();
+const profileData: any = ref({});
+const mode = ref("create");
+const store = userStore();
+const role = store.userLogin.role?.name;
+const userId = computed(() => store.userLogin.id);
+
+const getProfile = async () => {
+  try {
+    const response: any = await api.get("/profile/me");
+    profileData.value = response.data;
+    mode.value = "update";
+    Object.assign(payloadProfile, {
+      firstName: profileData.value.firstName,
+      lastName: profileData.value.lastName,
+      description: profileData.value.description,
+      image: profileData.value.image,
+    });
+  } catch (error) {
+    mode.value = "create";
+    console.log(error);
+  }
+};
 
 const { previewImg, uploadFile, resetFile, handleUploadFile } = useUploadFile();
-const token = ref(
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIyOTljYjUzLWEwZjgtNDBlNi1hOTI1LTI4ODBhYzdmNzI1YiIsInVzZXJuYW1lIjoiYWRtaW4xIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3NTQwNjI5MDgsImV4cCI6MTc1NDE0OTMwOH0.hXXPi154H73CCdMficqHSBlyx0pimQBgV1noWisb4D4"
-);
 
 const isLoading = ref<boolean>(false);
 const payloadProfile = reactive({
-  userId: props.userId,
-  firstName: props.profile?.firstName || "",
-  lastName: props.profile?.lastName || "",
-  description: props.profile?.description || "",
-  image: props.profile?.image || null,
+  userId: userId.value,
+  firstName: "",
+  lastName: "",
+  description: "",
+  image: null,
 });
 
 const { errors, validate } = useZodForm(ProfileSchema, payloadProfile);
 
 const handleSubmitFormProfile = async () => {
   const result = validate();
+  console.log("masuk ->", result);
+
   if (!result.success) return;
-  isLoading.value = !isLoading.value;
+  isLoading.value = true;
   try {
     const formData = new FormData();
-    formData.append("userId", props.userId);
+    formData.append("userId", userId.value || profileData.value.id);
     formData.append("firstName", payloadProfile.firstName);
     formData.append("lastName", payloadProfile.lastName);
     formData.append("description", payloadProfile.description);
     if (uploadFile.value) {
-      formData.append("file", uploadFile.value);
+      formData.append("image", uploadFile.value);
     }
-    const url =
-      props.mode === "create"
-        ? `${config.public.apiUrl}/profile`
-        : `${config.public.apiUrl}/profile/${props.profile.id}`;
-    const method = props.mode === "create" ? "POST" : "PATCH";
-    await fetch(url, {
-      method,
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-      },
-      body: formData,
-    });
+
+    console.log("test", payloadProfile);
   } catch (error) {
     console.error(error);
   } finally {
-    isLoading.value = !isLoading.value;
+    isLoading.value = false;
   }
 };
 
@@ -172,5 +179,9 @@ const previewImage = computed(() =>
 
 watch(uploadFile, (file: any) => {
   payloadProfile.image = file;
+});
+
+onMounted(() => {
+  getProfile();
 });
 </script>
